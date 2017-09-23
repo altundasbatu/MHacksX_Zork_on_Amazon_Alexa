@@ -15,7 +15,7 @@ exports.handler = (event, context) => {
         console.log(`LAUNCH REQUEST`);
         context.succeed(
           generateResponse(
-            buildSpeechletResponse("Welcome to Zork! Say begin to start your adventure!", false), {"game_state" : 1}
+            buildSpeechletResponse("Welcome to Zork!", false), {"game_state" : 1}
           )
         );
         break;
@@ -39,18 +39,18 @@ exports.handler = (event, context) => {
               console.log("USER INPUT: " + user_input);
               if (user_input !== undefined && user_input === "take mailbox") {
                 console.log("USER INPUT HAS MAILBOX");
-                user_input = event.request.intent.slots.Zorkput.value;
-               // user_input = null;
+          //      user_input = event.request.intent.slots.Zorkput.value;
+                //user_input = null;
                 buildResponse(context, "You cannot be serious.", 3);
               }
                if (user_input !== undefined && user_input === "open mailbox") {
-                user_input = event.request.intent.slots.Zorkput.value;
-
+               // user_input = event.request.intent.slots.Zorkput.value;
+                //user_input = null;
                 buildResponse(context, "Opening the small mailbox reveals a leaflet.", 3);
               }
-              else {
-                buildResponse(context, "Say something else rainbow head", 3);
-              }
+              
+            buildResponse(context, "Say something else", 3);
+              
             }
             else {
               buildResponse(context, "WHAT!?!?", 1);
