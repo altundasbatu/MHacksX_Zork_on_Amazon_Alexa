@@ -19,11 +19,12 @@ exports.handler = (event, context) => {
         // Session Ended Request
         console.log("SESSION ENDED REQUEST")
         break;
-      case "PlayZork":
+      case "IntentRequest":
         // Intent Request
         console.log("INTENT REQUEST");
-        console.log("EVENT " + JSON.stringify(event, null, 2));
-        console.log("GAME STATE: " + session.attributes["game_state"]);
+        console.log("EVENT: " + JSON.stringify(event, null, 2));
+        console.log("CONTEXT: " + JSON.stringify(context, null, 2));
+        // console.log("GAME STATE: " + session.attributes["game_state"]);
 
         if (event.request.intent.name === "PlayZork") {
           switch(session.attributes["game_state"]) {
