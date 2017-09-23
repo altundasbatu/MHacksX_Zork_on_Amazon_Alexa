@@ -2,8 +2,20 @@ exports.handler = (event, context) => {
 
   try {
     var session = event.session;
-    var suites = ["spades", "hearts", "clubs", "diamonds"];
+    var suits = ["spades", "hearts", "clubs", "diamonds"];
     var ranks = [2, 3, 4, 5, 6, 7, 8, 9, 10, "Jack", "Queen", "King", "Ace"];
+    var soloActions = ["Do 5 push ups",
+                       "Do 10 push ups",
+                       "Drink with anyone you choose!",
+                       "Drink!",
+                       "You can't speak for three rounds",
+                       "Pick a person to mute",
+                       "Do 5 jumping jacks or drink"
+                       "If you are wearing socks, drink"];
+    var groupActions = ["hug the person who has",
+                        "slap the person who has",
+                        "drink with the person who has",
+                        ];
     if (event.session.new) {
       // New Session
       console.log("NEW SESSION")
@@ -16,14 +28,14 @@ exports.handler = (event, context) => {
         console.log(`LAUNCH REQUEST`);
         context.succeed(
           generateResponse(
-            buildSpeechletResponse("Welcome to Cardy Party Game! Are you ready to play?", false)
+            buildSpeechletResponse("Welcome to Cardy Party Game! Say help if it's your first time. Are you ready to play?", false)
           )
         );
         break;
 
-      case "IntentRequest":
+      case "AMAZON.YesIntent":
         // Intent Request
-        console.log(`INTENT REQUEST`)
+        console.log(`YES INTENT REQUEST`)
 
         switch(event.request.intent.name) {
           case "PlayIntent":
@@ -38,6 +50,9 @@ exports.handler = (event, context) => {
             throw "Invalid intent"
         }
 
+        break;
+      case "AMAZON.HelpIntent";
+        buildResponse(context, "Deal an entire deck of cards to all players. When you are ready say, launch Party Game and follow the instructions. Have fun!");
         break;
 
       case "SessionEndedRequest":
