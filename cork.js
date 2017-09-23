@@ -1,68 +1,65 @@
-exports.handler = (event, context) => {
+/* eslint-disable  func-names */
+/* eslint quote-props: ["error", "consistent"]*/
+/**
+ * This sample demonstrates a sample skill built with Amazon Alexa Skills nodejs
+ * skill development kit.
+ * This sample supports multiple languages (en-US, en-GB, de-GB).
+ * The Intent Schema, Custom Slot and Sample Utterances for this skill, as well
+ * as testing instructions are located at https://github.com/alexa/skill-sample-nodejs-howto
+ **/
 
-  try {
+'use strict';
 
-    if (event.session.new) {
-      // New Session
-      console.log("NEW SESSION")
-    }
+const Alexa = require('alexa-sdk');
+const recipes = require('./recipes');
 
-    switch (event.request.type) {
+const APP_ID = undefined; // TODO replace with your app ID (OPTIONAL).
 
-      case "LaunchRequest":
-        // Launch Request
-        console.log("LAUNCH REQUEST")
-        context.succeed(
-          generateResponse(
-            buildSpeechletResponse("Welcome to an Alexa Skill, this is running on a deployed lambda function", true),
-            {}
-          )
-        )
-        break;
+const handlers = {
+    //Use LaunchRequest, instead of NewSession if you want to use the one-shot model
+    // Alexa, ask [my-skill-invocation-name] to (do something)...
+    'LaunchRequest': function () {
+        this.attributes.speechOutput = 'Welcome to Zork!';
+        // If the user either does not reply to the welcome message or says something that is not
+        // understood, they will be prompted again with this text.
+        this.attributes.repromptSpeech = 'Say begin to start your adventure!';
 
-      case "IntentRequest":
-        // Intent Request
-        console.log("INTENT REQUEST")
-
-        switch(event.request.intent.name) {
-            case "PlayZork":
-                // this.attributes['game_state'] = 0;
-                console.log(this);
-                this.emit(':ask', "Welcome to Zork! You are standing in an open field west of a white house, with a boarded front door. A secret path leads southwest into the forest. There is a Small Mailbox.", "What do you do?");
-                break;
-            default:
-                throw "Invalid intent"
-        }
-        break;
-      case "SessionEndedRequest":
-        // Session Ended Request
-        console.log("SESSION ENDED REQUEST")
-        break;
-      default:
-        context.fail("INVALID REQUEST TYPE: ${event.request.type}")
-    }
-
-  } catch(error) { context.fail(`Exception: ${error}`) }
-
-}
-
-// Helpers
-buildSpeechletResponse = (outputText, shouldEndSession) => {
-
-  return {
-    outputSpeech: {
-      type: "PlainText",
-      text: outputText
+        this.response.speak(this.attributes.speechOutput).listen(this.attributes.repromptSpeech);
+        this.emit(':responseReady');
     },
-    shouldEndSession: shouldEndSession
-  }
+    'PlayZork': function () {
+        this.attributes.speechOutput = 'You are standing in an open field west of a white house';
+        this.attributes.repromptSpeech = 'What do you do?';
+    },
+    'AMAZON.HelpIntent': function () {
+        this.attributes.speechOutput = this.t('HELP_MESSAGE');
+        this.attributes.repromptSpeech = this.t('HELP_REPROMPT');
 
-}
+        this.response.speak(this.attributes.speechOutput).listen(this.attributes.repromptSpeech);
+        this.emit(':responseReady');
+    },
+    'AMAZON.StopIntent': function () {
+        this.emit('SessionEndedRequest');
+    },
+    'AMAZON.CancelIntent': function () {
+        this.emit('SessionEndedRequest');
+    },
+    'SessionEndedRequest': function () {
+        console.log(`Session ended: ${this.event.request.reason}`);
+    },
+    'Unhandled': function () {
+        this.attributes.speechOutput = this.t('HELP_MESSAGE');
+        this.attributes.repromptSpeech = this.t('HELP_REPROMPT');
+        this.response.speak(this.attributes.speechOutput).listen(this.attributes.repromptSpeech);
+        this.emit(':responseReady');
+    },
+};
 
-generateResponse = (speechletResponse, sessionAttributes) => {
-  return {
-    version: "1.0",
-    sessionAttributes: sessionAttributes,
-    response: speechletResponse
-  }
-}
+exports.handler = function (event, context, callback) {
+    const alexa = Alexa.handler(event, context, callback);
+    alexa.APP_ID = APP_ID;
+    // To enable string internationalization (i18n) features, set a resources object.
+    alexa.resources = languageStrings;
+    alexa.registerHandlers(handlers);
+    alexa.execute();
+};
