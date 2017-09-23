@@ -24,43 +24,27 @@ exports.handler = (event, context) => {
         // Intent Request
         console.log(`INTENT REQUEST`)
 
+        console.log("EVENT: " + JSON.stringify(event, null, 2));
         console.log("GAME STATE: " + session.attributes["game_state"]);
         console.log("USER INPUT: " + event.request.intent.slots.Zorkput.value);
+
+        user_action = event.request.intent.slots.Action.value;
+        user_item = event.request.intent.slots.Zorkput.value;
+        game_state = session.attributes["game_state"];
+
         switch(event.request.intent.name) {
           case "PlayZork":
-            console.log("EVENT: " + JSON.stringify(event, null, 2));
-            console.log("ATTRIBUTES: " + session.attributes);
-            if (session.attributes["game_state"] === 1) {
+            if (user_action !== undefined && user_item !== undefined) {
+              if (game_state === 1) {
                 // You are standing in an open field west of a white house, with a boarded front door.A secret path leads southwest into the forest. There is a Small Mailbox. 
                 buildResponse(context, "What do you do?", 3);
-            }
-          //     && user_input === "take mailbox") {
-          //       console.log("USER INPUT HAS MAILBOX");
-          // //      user_input = event.request.intent.slots.Zorkput.value;
-          //       //user_input = null;
-          //       buildResponse(context, "You cannot be serious.", 3);
-          //     }
-          //      if (user_input !== undefined && user_input === "flying dragon") {
-          //      // user_input = event.request.intent.slots.Zorkput.value;
-          //       //user_input = null;
-          //       buildResponse(context, "Opening the small mailbox reveals a leaflet.", 3);
-          //     }
-              
-            buildResponse(context, "Say something else", 3);
-              
-            }
-            else {
-              buildResponse(context, "WHAT!?!?", 1);
-            }
-
-            break;
-          case "TakeIntent":
-            user_input = event.request.intent.slots.Zorkput.value;
-            game_state = session.attributes["game_state"];
-            if (user_input !== undefined) {
-              if (game_state === 3) {
-                buildResponse(context, "Take intent " + user_input, 3);
               }
+              else if (game_state === 3) {
+                buildResponse(context, user_action + user_item, 3);
+              }
+            }
+            else  {
+              buildResponse(context, "Say something else", 3);
             }
             break;
           default:
