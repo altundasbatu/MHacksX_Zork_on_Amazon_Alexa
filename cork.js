@@ -22,11 +22,10 @@ exports.handler = (event, context) => {
       default:
         // Intent Request
         console.log("INTENT REQUEST");
-        console.log(JSON.stringify(event, null, 2));
+        console.log("EVENT " + JSON.stringify(event, null, 2));
+        console.log("GAME STATE: " + session.attributes["game_state"]);
 
         if (event.request.intent.name === "PlayZork") {
-          // console.log("ATTRIBUTES: " + session.attributes);
-          // console.log("GAME STATE: " + session.attributes["game_state"]);
           switch(session.attributes["game_state"]) {
             case 1:
               game_state_1(event, context);
@@ -92,7 +91,7 @@ game_state_1 = (event, context) => {
                            "There is a Small Mailbox.", 3);
   }
   else {
-
+    buildResponse(context, "Say begin to start your game", 1);
   }
 }
 
