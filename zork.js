@@ -32,47 +32,7 @@ exports.handler = (event, context) => {
             var body = ""
             context.succeed(
               generateResponse(
-                buildSpeechletResponse(`Welcome to Zork! You are standing in an open field west of a white house, with a boarded front door.A secret path leads southwest into the forest. There is a Small Mailbox.`, false)
-
-              })
-            })
-            break;
-
-          case "GetVideoViewCount":
-            var endpoint = "" // ENDPOINT GOES HERE
-            var body = ""
-            https.get(endpoint, (response) => {
-              response.on('data', (chunk) => { body += chunk })
-              response.on('end', () => {
-                var data = JSON.parse(body)
-                var viewCount = data.items[0].statistics.viewCount
-                context.succeed(
-                  generateResponse(
-                    buildSpeechletResponse(`Current view count is ${viewCount}`, true),
-                    {}
-                  )
-                )
-              })
-            })
-            break;
-
-          case "GetVideoViewCountSinceDate":
-            console.log(event.request.intent.slots.SinceDate.value)
-            var endpoint = "" // ENDPOINT GOES HERE
-            var body = ""
-            https.get(endpoint, (response) => {
-              response.on('data', (chunk) => { body += chunk })
-              response.on('end', () => {
-                var data = JSON.parse(body)
-                var viewCount = data.items[0].statistics.viewCount
-                context.succeed(
-                  generateResponse(
-                    buildSpeechletResponse(`Current view count is ${viewCount}`, true),
-                    {}
-                  )
-                )
-              })
-            })
+                buildSpeechletResponse(`Welcome to Zork! You are standing in an open field west of a white house, with a boarded front door.A secret path leads southwest into the forest. There is a Small Mailbox.`, false) ) );
             break;
 
           default:
