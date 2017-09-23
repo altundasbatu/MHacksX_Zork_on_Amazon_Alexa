@@ -34,12 +34,6 @@ exports.handler = (event, context) => {
                 // You are standing in an open field west of a white house, with a boarded front door.A secret path leads southwest into the forest. There is a Small Mailbox. 
                 buildResponse(context, "What do you do?", 3);
             }
-            else if (session.attributes["game_state"] === 3) {
-              user_input = event.request.intent.slots.Zorkput.value;
-              console.log("USER INPUT: " + user_input);
-              if (user_input !== undefined) {
-                buildResponse(context, user_input, 3);
-              }
           //     && user_input === "take mailbox") {
           //       console.log("USER INPUT HAS MAILBOX");
           // //      user_input = event.request.intent.slots.Zorkput.value;
@@ -59,6 +53,15 @@ exports.handler = (event, context) => {
               buildResponse(context, "WHAT!?!?", 1);
             }
 
+            break;
+          case "TakeIntent":
+            user_input = event.request.intent.slots.Zorkput.value;
+            game_state = session.attributes["game_state"];
+            if (user_input !== undefined) {
+              if (game_state === 3) {
+                buildResponse(context, "Take intent " + user_input, 3);
+              }
+            }
             break;
           default:
             throw "Invalid intent"
