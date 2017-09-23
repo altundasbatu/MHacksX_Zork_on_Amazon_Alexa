@@ -1,6 +1,7 @@
 exports.handler = (event, context) => {
 
   try {
+    var session = event.session;
 
     if (event.session.new) {
       // New Session
@@ -14,11 +15,9 @@ exports.handler = (event, context) => {
         console.log(`LAUNCH REQUEST`)
         context.succeed(
           generateResponse(
-            buildSpeechletResponse("Welcome to an Alexa Skill, this is running on a deployed lambda function", true),
-            {}
+            buildSpeechletResponse("Welcome to an Alexa Skill, this is running on a deployed lambda function", true), {"game_state" : 3}
           )
         );
-        session.sessionAttributes = {"game_state" : 3};
         break;
 
       case "IntentRequest":
