@@ -26,20 +26,21 @@ exports.handler = (event, context) => {
 
         console.log("EVENT: " + JSON.stringify(event, null, 2));
         console.log("GAME STATE: " + session.attributes["game_state"]);
-        console.log("USER INPUT: " + event.request.intent.slots.Zorkput.value);
 
         user_action = event.request.intent.slots.Action.value;
         user_item = event.request.intent.slots.Zorkput.value;
         game_state = session.attributes["game_state"];
 
+        console.log("USER ACTION: " + event.request.intent.slots.Action.value);
+        console.log("USER ITEM: " + event.request.intent.slots.Zorkput.value);
         switch(event.request.intent.name) {
           case "PlayZork":
+            if (game_state === 1) {
+              // You are standing in an open field west of a white house, with a boarded front door.A secret path leads southwest into the forest. There is a Small Mailbox. 
+              buildResponse(context, "What do you do?", 3);
+            }
             if (user_action !== undefined && user_item !== undefined) {
-              if (game_state === 1) {
-                // You are standing in an open field west of a white house, with a boarded front door.A secret path leads southwest into the forest. There is a Small Mailbox. 
-                buildResponse(context, "What do you do?", 3);
-              }
-              else if (game_state === 3) {
+              if (game_state === 3) {
                 buildResponse(context, user_action + user_item, 3);
               }
             }
