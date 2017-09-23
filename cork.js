@@ -15,8 +15,11 @@ exports.handler = (event, context) => {
         console.log("LAUNCH REQUEST")
         buildResponse(context, "Welcome to Zork! Say begin to start your adventure!", 1);
         break;
-
-      case "IntentRequest":
+      case "SessionEndedRequest":
+        // Session Ended Request
+        console.log("SESSION ENDED REQUEST")
+        break;
+      default:
         // Intent Request
         console.log("INTENT REQUEST");
 
@@ -51,18 +54,9 @@ exports.handler = (event, context) => {
                 break;
             }
             break;
-
-          default:
-            throw "Invalid intent"
         }
 
         break;
-
-      case "SessionEndedRequest":
-        // Session Ended Request
-        console.log(`SESSION ENDED REQUEST`)
-        break;
-
       default:
         context.fail(`INVALID REQUEST TYPE: ${event.request.type}`)
 
@@ -94,7 +88,6 @@ generateResponse = (speechletResponse, sessionAttributes) => {
 }
 
 game_state_1 = (event, context) => {
-<<<<<<< HEAD
   user_input = event.request.intent.slots.Zorkput.value;
   if(user_input === "begin") {
     buildResponse(context, "You are standing in an open field west of a white house, with a boarded front door." +
