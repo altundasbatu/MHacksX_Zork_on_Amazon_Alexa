@@ -24,11 +24,12 @@ exports.handler = (event, context) => {
         // Intent Request
         console.log(`INTENT REQUEST`)
 
+        console.log("GAME STATE: " + session.attributes["game_state"]);
+        console.log("USER INPUT: " + event.request.intent.slots.Zorkput.value);
         switch(event.request.intent.name) {
           case "PlayZork":
             console.log("EVENT: " + JSON.stringify(event, null, 2));
             console.log("ATTRIBUTES: " + session.attributes);
-            console.log("GAME STATE: " + session.attributes["game_state"]);
             if (session.attributes["game_state"] === 1) {
                 // You are standing in an open field west of a white house, with a boarded front door.A secret path leads southwest into the forest. There is a Small Mailbox. 
                 buildResponse(context, "What do you do?", 3);
@@ -43,7 +44,11 @@ exports.handler = (event, context) => {
               else {
                 buildResponse(context, "Say something else rainbow head", 3);
               }
-            }    
+            }
+            else {
+              buildResponse(context, "WHAT!?!?", 1);
+            }
+
             break;
           default:
             throw "Invalid intent"
