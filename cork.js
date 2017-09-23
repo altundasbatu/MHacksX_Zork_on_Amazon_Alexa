@@ -26,16 +26,17 @@ exports.handler = (event, context) => {
 
         switch(event.request.intent.name) {
           case "PlayZork":
-            console.log("EVENT: " + JSON.stringify(event, null, 2);
+            console.log("EVENT: " + JSON.stringify(event, null, 2));
             console.log("ATTRIBUTES: " + session.attributes);
             console.log("GAME STATE: " + session.attributes["game_state"]);
             if (session.attributes["game_state"] === 1) {
-                buildResponse(context, "You are standing in an open field west of a white house, with a boarded front door.A secret path leads southwest into the forest. There is a Small Mailbox. What do you do?", 3);
+                // You are standing in an open field west of a white house, with a boarded front door.A secret path leads southwest into the forest. There is a Small Mailbox. 
+                buildResponse(context, "What do you do?", 3);
             }
             else if (session.attributes["game_state"] === 3) {
               user_input = event.request.intent.slots.Zorkput.value;
-              console.log(user_input);
-              if (user_input === "take mailbox") {
+              console.log("USER INPUT: " + user_input);
+              if (user_input.includes("mailbox") {
                 buildResponse(context, "You cannot be serious.", 3);
               }
               else {
