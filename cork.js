@@ -22,44 +22,41 @@ exports.handler = (event, context) => {
       default:
         // Intent Request
         console.log("INTENT REQUEST");
+        console.log(JSON.stringify(event, null, 2));
 
-        switch(event.request.intent.name) {
-          case "PlayZork":
-            // console.log("ATTRIBUTES: " + session.attributes);
-            // console.log("GAME STATE: " + session.attributes["game_state"]);
-            switch(session.attributes["game_state"]) {
-              case 1:
-                game_state_1(event, context);
-                break;
-              case 3:
-                game_state_3(event, context);
-                break;
-              case 4:
-                game_state_4(event, context);
-                break;
-              case 8:
-                game_state_8(event, context);
-                break;
-              case 9:
-                game_state_9(event, context);
-                break;
-              case 10:
-                game_state_10(event, context);
-                break;
-              case 11:
-                game_state_11(event, context);
-                break;
-              default:
-                buildResponse(context, "Invalid game state, start over", 1);
-                break;
-            }
-            break;
+        if (event.request.intent.name === "PlayZork") {
+          // console.log("ATTRIBUTES: " + session.attributes);
+          // console.log("GAME STATE: " + session.attributes["game_state"]);
+          switch(session.attributes["game_state"]) {
+            case 1:
+              game_state_1(event, context);
+              break;
+            case 3:
+              game_state_3(event, context);
+              break;
+            case 4:
+              game_state_4(event, context);
+              break;
+            case 8:
+              game_state_8(event, context);
+              break;
+            case 9:
+              game_state_9(event, context);
+              break;
+            case 10:
+              game_state_10(event, context);
+              break;
+            case 11:
+              game_state_11(event, context);
+              break;
+            default:
+              buildResponse(context, "Invalid game state, start over", 1);
+              break;
+          }
         }
-
-        break;
-      default:
-        context.fail(`INVALID REQUEST TYPE: ${event.request.type}`)
-
+        else {
+          console.log("NOT PLAYZORK")
+        }
     }
 
   } catch(error) { context.fail(`Exception: ${error}`) }
