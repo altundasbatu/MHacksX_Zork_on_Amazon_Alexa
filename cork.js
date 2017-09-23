@@ -6,11 +6,6 @@ exports.handler = (event, context) => {
     if (event.session.new) {
       // New Session
       console.log("NEW SESSION")
-      context.succeed(
-        generateResponse(
-          buildSpeechletResponse("Welcome to Zork! Say begin to start your adventure!", false), {"game_state" : 1}
-        )
-      );
     }
 
     switch (event.request.type) {
@@ -18,6 +13,11 @@ exports.handler = (event, context) => {
       case "LaunchRequest":
         // Launch Request
         console.log(`LAUNCH REQUEST`);
+        context.succeed(
+          generateResponse(
+            buildSpeechletResponse("Welcome to Zork! Say begin to start your adventure!", false), {"game_state" : 1}
+          )
+        );
         break;
 
       case "IntentRequest":
@@ -37,7 +37,7 @@ exports.handler = (event, context) => {
             else if (session.attributes["game_state"] === 3) {
               user_input = event.request.intent.slots.Zorkput.value;
               console.log("USER INPUT: " + user_input);
-              if (user_input.includes("mailbox")) {
+              if (user_input !== undefined && user_input.includes("mailbox")) {
                 user_input = null;
                 buildResponse(context, "You cannot be serious.", 3);
               }
