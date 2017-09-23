@@ -45,7 +45,7 @@ while loop == 3:
 	else:
 		print("---------------------------------------------------------")
 		loop = 4
-	
+
 
 	# First Input Loop
 	while loop == 4:
@@ -90,7 +90,7 @@ while loop == 3:
 		else:
 			print("---------------------------------------------------------")
 			loop = 4
-	
+
 
 	# Southwest Loop
 	while loop == 8:
@@ -115,7 +115,7 @@ while loop == 3:
 		else:
 			print("---------------------------------------------------------")
 			loop = 8
-	
+
 
 	# East Loop and Grating Input
 	while loop == 9:
@@ -132,7 +132,7 @@ while loop == 3:
 			loop = 10
 		else:
 			print("---------------------------------------------------------")
-			loop = 9	
+			loop = 9
 
 
 	# Grating Loop and Cave Input
@@ -194,7 +194,7 @@ while loop == 3:
 		else:
 			print("---------------------------------------------------------")
 			loop = 11
-		
+
 		# Exit loop at the end of game
 		exit_inp = input("Do you want to continue? Y/N ")
 		if exit_inp.lower() == ("n"):
