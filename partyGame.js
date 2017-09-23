@@ -29,12 +29,13 @@ exports.handler = (event, context) => {
         context.succeed(
           generateResponse(
             buildSpeechletResponse("Welcome to Cardy Party Game! Say help if it's your first time.", false)
-            buildSpeechletReprompt("Are you ready to play?", false);
           )
         );
+
+        buildReprompt(context, "Are you ready to play?");
         break;
 
-      case "AMAZON.YesIntent":
+      case "IntentRequest":
         // Intent Request
         console.log(`YES INTENT REQUEST`)
 
@@ -47,20 +48,17 @@ exports.handler = (event, context) => {
             buildResponse(context, "I choose " + randomRank + " of " + randomSuit);
 
             break;
+          case "AMAZON.HelpIntent":
+            buildResponse(context, "Deal an entire deck of cards to all players. When you are ready say, launch Party Game and follow the instructions. Have fun!");
+            break;
           default:
             throw "Invalid intent"
         }
-
         break;
-      case "AMAZON.HelpIntent":
-        buildResponse(context, "Deal an entire deck of cards to all players. When you are ready say, launch Party Game and follow the instructions. Have fun!");
-        break;
-
       case "SessionEndedRequest":
         // Session Ended Request
         console.log(`SESSION ENDED REQUEST`)
         break;
-
       default:
         context.fail(`INVALID REQUEST TYPE: ${event.request.type}`)
 
@@ -84,7 +82,7 @@ buildSpeechletResponse = (outputText, shouldEndSession) => {
 
 buildSpeechletReprompt = (outputText, shouldEndSession) => {
   return {
-    reprompt {
+    reprompt: {
       outputSpeech: {
         type: "PlainText",
         text: outputText
