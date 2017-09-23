@@ -37,9 +37,13 @@ exports.handler = (event, context) => {
             else if (session.attributes["game_state"] === 3) {
               user_input = event.request.intent.slots.Zorkput.value;
               console.log("USER INPUT: " + user_input);
-              if (user_input !== undefined && user_input.includes("mailbox")) {
+              if (user_input !== undefined && user_input === "take mailbox") {
+                console.log("USER INPUT HAS MAILBOX");
                 user_input = null;
                 buildResponse(context, "You cannot be serious.", 3);
+              }
+              else if (user_input !== undefined && user_input === "open mailbox") {
+                buildResponse(context, "Opening the small mailbox reveals a leaflet.", 3);
               }
               else {
                 buildResponse(context, "Say something else rainbow head", 3);
