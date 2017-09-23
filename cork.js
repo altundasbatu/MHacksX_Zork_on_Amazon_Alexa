@@ -15,7 +15,7 @@ exports.handler = (event, context) => {
         console.log(`LAUNCH REQUEST`)
         context.succeed(
           generateResponse(
-            buildSpeechletResponse("Welcome to an Alexa Skill, this is running on a deployed lambda function", true), {"game_state" : 3}
+            buildSpeechletResponse("Welcome to Zork! Say begin to start your adventure!", false), {"game_state" : 3}
           )
         );
         break;
@@ -29,7 +29,7 @@ exports.handler = (event, context) => {
             console.log("GAME STATE: " + session.sessionAttributes["game_state"]);
             context.succeed(
               generateResponse(
-                buildSpeechletResponse("Welcome to Zork! You are standing in an open field west of a white house, with a boarded front door.A secret path leads southwest into the forest. There is a Small Mailbox. What do you do? ", false)
+                buildSpeechletResponse("You are standing in an open field west of a white house, with a boarded front door.A secret path leads southwest into the forest. There is a Small Mailbox. What do you do? ", false)
                   ) );
             break;
 
