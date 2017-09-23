@@ -39,10 +39,13 @@ exports.handler = (event, context) => {
               console.log("USER INPUT: " + user_input);
               if (user_input !== undefined && user_input === "take mailbox") {
                 console.log("USER INPUT HAS MAILBOX");
-                user_input = null;
+                user_input = event.request.intent.slots.Zorkput.value;
+               // user_input = null;
                 buildResponse(context, "You cannot be serious.", 3);
               }
-              else if (user_input !== undefined && user_input === "open mailbox") {
+               if (user_input !== undefined && user_input === "open mailbox") {
+                user_input = event.request.intent.slots.Zorkput.value;
+
                 buildResponse(context, "Opening the small mailbox reveals a leaflet.", 3);
               }
               else {
