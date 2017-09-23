@@ -19,7 +19,7 @@ exports.handler = (event, context) => {
         // Session Ended Request
         console.log("SESSION ENDED REQUEST")
         break;
-      default:
+      case "PlayZork":
         // Intent Request
         console.log("INTENT REQUEST");
         console.log("EVENT " + JSON.stringify(event, null, 2));
@@ -56,6 +56,10 @@ exports.handler = (event, context) => {
         else {
           console.log("NOT PLAYZORK")
         }
+        break;
+      default:
+        context.fail("INVALID REQUEST TYPE: ${event.request.type}");
+        break;
     }
 
   } catch(error) { context.fail(`Exception: ${error}`) }
