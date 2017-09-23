@@ -10,7 +10,7 @@ exports.handler = (event, context) => {
                        "Drink!",
                        "You can't speak for three rounds",
                        "Pick a person to mute",
-                       "Do 5 jumping jacks or drink"
+                       "Do 5 jumping jacks or drink",
                        "If you are wearing socks, drink"];
     var groupActions = ["hug the person who has",
                         "slap the person who has",
@@ -28,7 +28,8 @@ exports.handler = (event, context) => {
         console.log(`LAUNCH REQUEST`);
         context.succeed(
           generateResponse(
-            buildSpeechletResponse("Welcome to Cardy Party Game! Say help if it's your first time. Are you ready to play?", false)
+            buildSpeechletResponse("Welcome to Cardy Party Game! Say help if it's your first time.", false)
+            buildSpeechletReprompt("Are you ready to play?", false);
           )
         );
         break;
@@ -51,7 +52,7 @@ exports.handler = (event, context) => {
         }
 
         break;
-      case "AMAZON.HelpIntent";
+      case "AMAZON.HelpIntent":
         buildResponse(context, "Deal an entire deck of cards to all players. When you are ready say, launch Party Game and follow the instructions. Have fun!");
         break;
 
@@ -79,7 +80,18 @@ buildSpeechletResponse = (outputText, shouldEndSession) => {
     },
     shouldEndSession: shouldEndSession
   }
+}
 
+buildSpeechletReprompt = (outputText, shouldEndSession) => {
+  return {
+    reprompt {
+      outputSpeech: {
+        type: "PlainText",
+        text: outputText
+      },
+      shouldEndSession: shouldEndSession
+    }
+  }
 }
 
 generateResponse = (speechletResponse, sessionAttributes) => {
@@ -97,6 +109,16 @@ buildResponse = (context, output) => {
     )
   );
 }
+
+buildReprompt = (context, output) => {
+  context.succeed(
+    generateResponse(
+      buildSpeechletReprompt(output, false)
+    )
+  );
+}
+
+
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
