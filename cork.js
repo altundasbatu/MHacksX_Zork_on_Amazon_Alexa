@@ -93,6 +93,12 @@ generateResponse = (speechletResponse, sessionAttributes) => {
   }
 }
 
+game_state_1 = (event, context) => {
+  buildResponse(context, "You are standing in an open field west of a white house, with a boarded front door." +
+                         "(A secret path leads southwest into the forest.)" +
+                         "There is a Small Mailbox.", 3);
+}
+
 game_state_3 = (event, context) => {
   user_input = event.request.intent.slots.Zorkput.value;
   if (user_input === "take mailbox") {
