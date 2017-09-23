@@ -37,17 +37,20 @@ exports.handler = (event, context) => {
             else if (session.attributes["game_state"] === 3) {
               user_input = event.request.intent.slots.Zorkput.value;
               console.log("USER INPUT: " + user_input);
-              if (user_input !== undefined && user_input === "take mailbox") {
-                console.log("USER INPUT HAS MAILBOX");
-          //      user_input = event.request.intent.slots.Zorkput.value;
-                //user_input = null;
-                buildResponse(context, "You cannot be serious.", 3);
+              if (user_input !== undefined) {
+                buildResponse(context, user_input, 3);
               }
-               if (user_input !== undefined && user_input === "open mailbox") {
-               // user_input = event.request.intent.slots.Zorkput.value;
-                //user_input = null;
-                buildResponse(context, "Opening the small mailbox reveals a leaflet.", 3);
-              }
+          //     && user_input === "take mailbox") {
+          //       console.log("USER INPUT HAS MAILBOX");
+          // //      user_input = event.request.intent.slots.Zorkput.value;
+          //       //user_input = null;
+          //       buildResponse(context, "You cannot be serious.", 3);
+          //     }
+          //      if (user_input !== undefined && user_input === "flying dragon") {
+          //      // user_input = event.request.intent.slots.Zorkput.value;
+          //       //user_input = null;
+          //       buildResponse(context, "Opening the small mailbox reveals a leaflet.", 3);
+          //     }
               
             buildResponse(context, "Say something else", 3);
               
