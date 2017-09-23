@@ -29,10 +29,12 @@ exports.handler = (event, context) => {
             console.log("ATTRIBUTES: " + session.attributes);
             console.log("GAME STATE: " + session.attributes["game_state"]);
             if (session.attributes["game_state"] === 3) {
-                var user_input = event.request.intent.slots.Input;
+                var user_input = JSON.stringify(event.request.intent, null, 2);
+                console.log(user_input);
+                // var user_input = event.request.intent.slots.Input;
                 context.succeed(
                   generateResponse(
-                    buildSpeechletResponse(user_input, false)
+                    buildSpeechletResponse("c out hi", false)
                       ) );
             }
             else {
