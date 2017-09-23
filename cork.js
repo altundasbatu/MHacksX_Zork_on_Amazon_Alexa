@@ -15,7 +15,7 @@ exports.handler = (event, context) => {
         console.log(`LAUNCH REQUEST`)
         context.succeed(
           generateResponse(
-            buildSpeechletResponse("Welcome to Zork! Say begin to start your adventure!", false), {"game_state" : 3}
+            buildSpeechletResponse("Welcome to Zork! Say begin to start your adventure!", false), {"game_state" : 1}
           )
         );
         break;
@@ -26,25 +26,23 @@ exports.handler = (event, context) => {
 
         switch(event.request.intent.name) {
           case "PlayZork":
+            console.log("EVENT: " + JSON.stringify(event, null, 2);
             console.log("ATTRIBUTES: " + session.attributes);
             console.log("GAME STATE: " + session.attributes["game_state"]);
-            if (session.attributes["game_state"] === 3) {
-                var user_input = JSON.stringify(event, null, 2);
-                console.log(user_input);
-                // var user_input = event.request.intent.slots.Input;
-                context.succeed(
-                  generateResponse(
-                    buildSpeechletResponse("c out hi", false)
-                      ) );
+            if (session.attributes["game_state"] === 1) {
+                buildResponse(context, "You are standing in an open field west of a white house, with a boarded front door.A secret path leads southwest into the forest. There is a Small Mailbox. What do you do?", 3);
             }
-            else {
-                context.succeed(
-                  generateResponse(
-                    buildSpeechletResponse("You are standing in an open field west of a white house, with a boarded front door.A secret path leads southwest into the forest. There is a Small Mailbox. What do you do? ", false)
-                      ) );
+            else if (session.attributes["game_state"] === 3) {
+              user_input = event.request.intent.slots.Zorkput.value;
+              console.log(user_input);
+              if (user_input === "take mailbox") {
+                buildResponse(context, "You cannot be serious.", 3);
+              }
+              else {
+                buildResponse(context, "Say something else rainbow head", 3);
+              }
             }    
             break;
-
           default:
             throw "Invalid intent"
         }
@@ -84,4 +82,12 @@ generateResponse = (speechletResponse, sessionAttributes) => {
     sessionAttributes: sessionAttributes,
     response: speechletResponse
   }
+}
+
+buildResponse = (context, output, game_state) => {
+  context.succeed(
+    generateResponse(
+      buildSpeechletResponse(output, false), {"game_state" : game_state}
+    )
+  );
 }
