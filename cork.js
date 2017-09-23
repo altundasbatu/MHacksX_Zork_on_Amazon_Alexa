@@ -28,10 +28,7 @@ exports.handler = (event, context) => {
             case "PlayZork":
                 this.attributes['game_state'] = 0;
                 console.log("Game state: " + this.attributes['game_state']);
-                this.emit(':ask', "Welcome to Zork! You are standing in an open 
-                field west of a white house, with a boarded front door.
-                A secret path leads southwest into the forest. There is a Small
-                Mailbox.", "What do you do?");
+                this.emit(':ask', "Welcome to Zork! You are standing in an open field west of a white house, with a boarded front door. A secret path leads southwest into the forest. There is a Small Mailbox.", "What do you do?");
                 break;
             default:
                 throw "Invalid intent"
