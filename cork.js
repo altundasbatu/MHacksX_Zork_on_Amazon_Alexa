@@ -17,7 +17,8 @@ exports.handler = (event, context) => {
             buildSpeechletResponse("Welcome to an Alexa Skill, this is running on a deployed lambda function", true),
             {}
           )
-        )
+        );
+        session.sessionAttributes = {"game_state" : 3};
         break;
 
       case "IntentRequest":
@@ -26,7 +27,7 @@ exports.handler = (event, context) => {
 
         switch(event.request.intent.name) {
           case "PlayZork":
-            console.log("CONTEXT " + context);
+            console.log("GAME STATE: " + session.sessionAttributes["game_state"]);
             context.succeed(
               generateResponse(
                 buildSpeechletResponse("Welcome to Zork! You are standing in an open field west of a white house, with a boarded front door.A secret path leads southwest into the forest. There is a Small Mailbox. What do you do? ", false)
