@@ -26,12 +26,11 @@ exports.handler = (event, context) => {
 
         switch(event.request.intent.name) {
           case "PlayZork":
-            var endpoint = "" // ENDPOINT GOES HERE
-            var body = ""
+            console.log("CONTEXT " + context);
             context.succeed(
               generateResponse(
-                buildSpeechletResponse(`Welcome to Zork! You are standing in an open field west of a white house, with a boarded front door.A secret path leads southwest into the forest. There is a Small Mailbox. What do you do? {}`, false),
-                  game_state: { type:int, text: 3} ) );
+                buildSpeechletResponse("Welcome to Zork! You are standing in an open field west of a white house, with a boarded front door.A secret path leads southwest into the forest. There is a Small Mailbox. What do you do? ", false)
+                  ) );
             break;
 
           default:
