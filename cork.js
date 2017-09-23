@@ -26,7 +26,8 @@ exports.handler = (event, context) => {
 
         switch(event.request.intent.name) {
           case "PlayZork":
-            console.log("GAME STATE: " + session.sessionAttributes["game_state"]);
+            console.log("ATTRIBUTES: " + session.attributes);
+            console.log("GAME STATE: " + session.attributes["game_state"]);
             context.succeed(
               generateResponse(
                 buildSpeechletResponse("You are standing in an open field west of a white house, with a boarded front door.A secret path leads southwest into the forest. There is a Small Mailbox. What do you do? ", false)
