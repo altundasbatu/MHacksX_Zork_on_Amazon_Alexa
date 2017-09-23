@@ -28,10 +28,18 @@ exports.handler = (event, context) => {
           case "PlayZork":
             console.log("ATTRIBUTES: " + session.attributes);
             console.log("GAME STATE: " + session.attributes["game_state"]);
-            context.succeed(
-              generateResponse(
-                buildSpeechletResponse("You are standing in an open field west of a white house, with a boarded front door.A secret path leads southwest into the forest. There is a Small Mailbox. What do you do? ", false)
-                  ) );
+            if (session.attributes["game_state"] === 3) {
+                context.succeed(
+                  generateResponse(
+                    buildSpeechletResponse("You win!", false)
+                      ) );
+            }
+            else {
+                context.succeed(
+                  generateResponse(
+                    buildSpeechletResponse("You are standing in an open field west of a white house, with a boarded front door.A secret path leads southwest into the forest. There is a Small Mailbox. What do you do? ", false)
+                      ) );
+            }    
             break;
 
           default:
