@@ -12,8 +12,13 @@ exports.handler = (event, context) => {
 
       case "LaunchRequest":
         // Launch Request
-        console.log("LAUNCH REQUEST")
-        buildResponse(context, "Welcome to Zork! Say begin to start your adventure!", 1);
+        console.log("LAUNCH REQUEST");
+        context.succeed(
+          generateResponse(
+            buildSpeechletResponse("Welcome to Zork! Say begin to start your adventure!", false), {"game_state" : 1}
+          )
+        );
+        // buildResponse(context, "Welcome to Zork! Say begin to start your adventure!", 1);
         break;
       case "SessionEndedRequest":
         // Session Ended Request
