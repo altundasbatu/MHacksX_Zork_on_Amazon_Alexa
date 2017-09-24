@@ -8,10 +8,10 @@ exports.handler = (event, context) => {
                        "Sit down",
                        "Do 5 push ups",
                        "Do 10 push ups",
-                       "Drink with anyone they choose!",
+                       "Drink with anyone you choose!",
                        "Drink!",
                        "remain silent for three rounds",
-                       "Pick a person to mute",
+                       "Pick a person to mute for three rounds",
                        "Do 5 jumping jacks or drink",
                        "drink if you are wearing socks"];
     var doubleActions = ["hug",
@@ -23,7 +23,7 @@ exports.handler = (event, context) => {
                         "switch seats with",
                         "swap hands with"];
     var groupActions = ["Everyone drink!",
-                        "Everyone who is standing, drink!",
+                        "Everyone standing, drink!",
                         "Last one who does this drinks. 3, 2, 1, Jump!",
                         "Last one who does this drinks. 3, 2, 1, Clap!",
                         "Last one who does this drinks. 3, 2, 1, Squat!",
@@ -40,29 +40,29 @@ exports.handler = (event, context) => {
         console.log(`LAUNCH REQUEST`);
         context.succeed(
           generateResponse(
-            buildSpeechletResponse("Welcome to Party Game! Say help if it's your first time. Are you ready to play?", false)
+            buildSpeechletResponse("Party Game! Are you ready to play?", false)
           )
         );
         break;
 
       case "IntentRequest":
         // Intent Request
-        console.log(`YES INTENT REQUEST`)
+        console.log("YES INTENT REQUEST");
 
         switch(event.request.intent.name) {
           case "AMAZON.YesIntent":
             var randomNum = getRandomInt(0,100);
-            if(randomNum >= 60){
+            if(randomNum >= 66){
               var actionIndex = getRandomInt(0, soloActions.length);
-              buildResponse(context, "I choose whoever has, " + getRandomCard(suits, ranks) + ", to, " + soloActions[actionIndex] + ". Next?", false);
+              buildResponse(context, "If you have, " + getRandomCard(suits, ranks) + ", " + soloActions[actionIndex] + ". Next?", false);
             }
-            else if (randomNum >= 20) {
+            else if (randomNum >= 33) {
               var actionIndex = getRandomInt(0, doubleActions.length); 
-              buildResponse(context, "I choose whoever has, " + getRandomCard(suits, ranks) + ", to, " + doubleActions[actionIndex] + " the person who has " + getRandomCard(suits, ranks) + ". Next?", false);
+              buildResponse(context, "If you have, " + getRandomCard(suits, ranks) + ", " + doubleActions[actionIndex] + " the person who has " + getRandomCard(suits, ranks) + ". Next?", false);
             }
             else {
               var actionIndex = getRandomInt(0, groupActions.length); 
-              buildResponse(context, groupActions[actionIndex]". Next?", false);
+              buildResponse(context, groupActions[actionIndex] + ". Next?", false);
             }
             break;
           case "AMAZON.NoIntent":
