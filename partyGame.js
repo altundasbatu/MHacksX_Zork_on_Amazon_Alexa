@@ -12,10 +12,20 @@ exports.handler = (event, context) => {
                        "Pick a person to mute",
                        "Do 5 jumping jacks or drink",
                        "drink if you are wearing socks"];
-    var groupActions = ["hug the person who has",
-                        "slap the person who has",
-                        "drink with the person who has",
+    var doubleActions = ["hug",
+                        "hold hands for 2 rounds with",
+                        "slap",
+                        "drink with",
+                        "swap tshirts with",
+                        "high five with",
+                        "switch seats with"
                         ];
+    var groupActions = ["Everyone drink!",
+                        "Last one who does this drinks. 3, 2, 1, Jump!",
+                        "Last one who does this drinks. 3, 2, 1, Clap!",
+                        "Last one who does this drinks. 3, 2, 1, Squat!",
+                        "Drink for every Ace in your hand and give your Aces to someone else",
+                        ""]
     if (event.session.new) {
       // New Session
       console.log("NEW SESSION")
@@ -28,7 +38,7 @@ exports.handler = (event, context) => {
         console.log(`LAUNCH REQUEST`);
         context.succeed(
           generateResponse(
-            buildSpeechletResponse("Welcome to Party Games! Say help if it's your first time. Are you ready to play? <break time=\"5s\"/>", false)
+            buildSpeechletResponse("Welcome to Party Game! Say help if it's your first time. Are you ready to play?", false)
           )
         );
         break;
@@ -41,18 +51,18 @@ exports.handler = (event, context) => {
           case "AMAZON.YesIntent":
             if(getRandomInt(0,2) >= 1){
               var actionIndex = getRandomInt(0, soloActions.length);
-              buildResponse(context, "I choose whoever has, " + getRandomCard(suits, ranks) + ", to, " + soloActions[actionIndex] + " Next?", false);
+              buildResponse(context, "I choose whoever has, " + getRandomCard(suits, ranks) + ", to, " + soloActions[actionIndex] + ". Next?", false);
             }
             else{
-              var actionIndex = getRandomInt(0, groupActions.length); 
-              buildResponse(context, "I choose whoever has, " + getRandomCard(suits, ranks) + ", to, " + groupActions[actionIndex] + getRandomCard(suits, ranks) + " Next?", false);
+              var actionIndex = getRandomInt(0, doubleActions.length); 
+              buildResponse(context, "I choose whoever has, " + getRandomCard(suits, ranks) + ", to, " + doubleActions[actionIndex] + " the person who has " + getRandomCard(suits, ranks) + ". Next?", false);
             }
             break;
           case "AMAZON.NoIntent":
             buildResponse(context, "Launch me again when you are ready!", true);
             break;
           case "AMAZON.HelpIntent":
-            buildResponse(context, "Deal an entire deck of cards to all players. When you are ready, say, launch Party Game and follow the instructions. Have fun!", true);
+            buildResponse(context, "Deal an entire deck of cards to all players. Wait for everyone to sort their hands. When you are ready, say launch Party Game and follow the instructions. Have fun!", true);
             break;
           case "AMAZON.CancelIntent":
             buildResponse(context,"",true);
