@@ -40,17 +40,39 @@ exports.handler = (event, context) => {
         console.log(`YES INTENT REQUEST`)
 
         switch(event.request.intent.name) {
-          case "PlayIntent":
-            var randomRankIndex = getRandomInt(0, 13);
-            var randomSuitIndex = getRandomInt(0, 4);
-            var randomRank = ranks[randomRankIndex];
-            var randomSuit = suits[randomSuitIndex];
-            buildResponse(context, "I choose " + randomRank + " of " + randomSuit);
-
+          case "AMAZON.YesIntent":
+            if(getRandomInt(0,1) > 0.5){
+              var randomRankIndex = getRandomInt(0, 13);
+              var randomSuitIndex = getRandomInt(0, 4);
+              var actionIndex = getRandomInt(0, 8);
+              var randomRank = ranks[randomRankIndex];
+              var randomSuit = suits[randomSuitIndex];
+              buildResponse(context, "I choose whoever has " + randomRank + " of " + randomSuit + "to " + soloActions[actionIndex], false);
+            }
+            else{
+              var randomRankIndex1 = getRandomInt(0, 13);
+              var randomSuitIndex1 = getRandomInt(0, 4);
+              var actionIndex = getRandomInt(0, 3); 
+              var randomRank1 = ranks[randomRankIndex1];
+              var randomSuit1 = suits[randomSuitIndex1];
+              var randomRankIndex2 = getRandomInt(0, 13);
+              var randomSuitIndex2 = getRandomInt(0, 4);
+              var randomRank2 = ranks[randomRankIndex2];
+              var randomSuit2 = suits[randomSuitIndex2];
+              buildResponse(context, "I choose whoever has " + randomRank1 + " of " + randomSuit1 + "to " + groupActions[actionIndex] + randomRank2 + " of " + randomSuit2, false);
+            }
             break;
+          case "AMAZON.NoIntent":
+            buildResponse(context, "I'll be waiting. Say yes when you are ready!", true);
           case "AMAZON.HelpIntent":
-            buildResponse(context, "Deal an entire deck of cards to all players. When you are ready say, launch Party Game and follow the instructions. Have fun!");
+            buildResponse(context, "Deal an entire deck of cards to all players. When you are ready say, launch Party Game and follow the instructions. Have fun!", true);
             break;
+          case "AMAZON.CancelIntent":
+            buildResponse(context,"",true);
+            break;
+          case "AMAZON.StopIntent":
+            buildResponse(context,"",true);
+            break;          
           default:
             throw "Invalid intent"
         }
@@ -100,10 +122,10 @@ generateResponse = (speechletResponse, sessionAttributes) => {
   }
 }
 
-buildResponse = (context, output) => {
+buildResponse = (context, output, shouldEndSession) => {
   context.succeed(
     generateResponse(
-      buildSpeechletResponse(output, false)
+      buildSpeechletResponse(output, shouldEndSession)
     )
   );
 }
