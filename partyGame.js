@@ -4,7 +4,9 @@ exports.handler = (event, context) => {
     var session = event.session;
     var suits = ["spades", "hearts", "clubs", "diamonds"];
     var ranks = [2, 3, 4, 5, 6, 7, 8, 9, 10, "Jack", "Queen", "King", "Ace"];
-    var soloActions = ["Do 5 push ups",
+    var soloActions = ["Stand up",
+                       "Sit down",
+                       "Do 5 push ups",
                        "Do 10 push ups",
                        "Drink with anyone they choose!",
                        "Drink!",
@@ -18,14 +20,14 @@ exports.handler = (event, context) => {
                         "drink with",
                         "swap tshirts with",
                         "high five with",
-                        "switch seats with"
-                        ];
+                        "switch seats with",
+                        "swap hands with"];
     var groupActions = ["Everyone drink!",
+                        "Everyone who is standing, drink!",
                         "Last one who does this drinks. 3, 2, 1, Jump!",
                         "Last one who does this drinks. 3, 2, 1, Clap!",
                         "Last one who does this drinks. 3, 2, 1, Squat!",
-                        "Drink for every Ace in your hand and give your Aces to someone else",
-                        ""]
+                        "Drink for every Ace in your hand and give your Aces to someone else"]
     if (event.session.new) {
       // New Session
       console.log("NEW SESSION")
@@ -62,7 +64,7 @@ exports.handler = (event, context) => {
             buildResponse(context, "Launch me again when you are ready!", true);
             break;
           case "AMAZON.HelpIntent":
-            buildResponse(context, "Deal an entire deck of cards to all players. Wait for everyone to sort their hands. When you are ready, say launch Party Game and follow the instructions. Have fun!", true);
+            buildResponse(context, "Deal an entire deck of cards to all players. Wait for everyone to sort their hands. Everyone starts sitting down. When you are ready, say launch Party Game and follow the instructions. Have fun!", true);
             break;
           case "AMAZON.CancelIntent":
             buildResponse(context,"",true);
