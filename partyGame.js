@@ -51,13 +51,18 @@ exports.handler = (event, context) => {
 
         switch(event.request.intent.name) {
           case "AMAZON.YesIntent":
-            if(getRandomInt(0,2) >= 1){
+            var randomNum = getRandomInt(0,100);
+            if(randomNum >= 60){
               var actionIndex = getRandomInt(0, soloActions.length);
               buildResponse(context, "I choose whoever has, " + getRandomCard(suits, ranks) + ", to, " + soloActions[actionIndex] + ". Next?", false);
             }
-            else{
+            else if (randomNum >= 20) {
               var actionIndex = getRandomInt(0, doubleActions.length); 
               buildResponse(context, "I choose whoever has, " + getRandomCard(suits, ranks) + ", to, " + doubleActions[actionIndex] + " the person who has " + getRandomCard(suits, ranks) + ". Next?", false);
+            }
+            else {
+              var actionIndex = getRandomInt(0, groupActions.length); 
+              buildResponse(context, groupActions[actionIndex]". Next?", false);
             }
             break;
           case "AMAZON.NoIntent":
